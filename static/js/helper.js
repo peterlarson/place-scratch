@@ -1,4 +1,5 @@
 var pixelSize = 10;
+var margin = 1;
 
 var canvas;
 var ctx;
@@ -19,11 +20,11 @@ var update = function() {
         pixels = data;
         width = pixels.length;
         height = pixels[0].length;
-        canvas.width = width*pixelSize;
-        canvas.height = height*pixelSize;
+        canvas.width = width*pixelSize + width*margin;
+        canvas.height = height*pixelSize + height*margin;
         for(var x=0; x<width; x++) {
             for(var y=0; y<height; y++) {
-                draw_pixel(x, y, pixels[x][y]);
+                draw_pixel(x*pixelSize + x*margin, y*pixelSize + y*margin, pixels[x][y]);
             }
         }
     })

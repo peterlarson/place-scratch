@@ -1,6 +1,3 @@
-'''
-test
-'''
 from flask import Flask, request, jsonify
 
 import redis
@@ -13,9 +10,9 @@ r = redis.StrictRedis(
 
 app = Flask(__name__)
 
-height = 4
-width = 4
-default_color = "#000000"
+height = 5
+width = 5
+default_color = "#234234"
 
 def r_name(x,y):
     return str(x) + '-' + str(y)
