@@ -10,8 +10,8 @@ r = redis.StrictRedis(
 
 app = Flask(__name__)
 
-height = 5
-width = 5
+height = 10
+width = 10
 default_color = "#234234"
 
 def r_name(x,y):
@@ -19,7 +19,7 @@ def r_name(x,y):
 
 @app.route("/")
 def hello():
-    return app.send_static_file('blank.html')
+    return app.send_static_file('index.html')
 
 
 @app.route("/update", methods=['POST'])

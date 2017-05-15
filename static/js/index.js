@@ -15,18 +15,22 @@ var draw_pixel = function(x, y, color) {
     );
 }
 
+var draw_pixels = function(pixels) {
+    width = pixels.length;
+    height = pixels[0].length;
+    canvas.width = width*pixelSize + width*margin;
+    canvas.height = height*pixelSize + height*margin;
+    for(var x=0; x<width; x++) {
+        for(var y=0; y<height; y++) {
+            draw_pixel(x*pixelSize + x*margin, y*pixelSize + y*margin, pixels[x][y]);
+        }
+    }
+}
+
 var update = function() {
     $.getJSON("/canvas", function(data) {
         pixels = data;
-        width = pixels.length;
-        height = pixels[0].length;
-        canvas.width = width*pixelSize + width*margin;
-        canvas.height = height*pixelSize + height*margin;
-        for(var x=0; x<width; x++) {
-            for(var y=0; y<height; y++) {
-                draw_pixel(x*pixelSize + x*margin, y*pixelSize + y*margin, pixels[x][y]);
-            }
-        }
+        draw_pixels(pixels);
     })
 }
 
