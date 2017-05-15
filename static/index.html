@@ -1,8 +1,21 @@
+<!DOCTYPE HTML>
+
+<html>
+
 <head>
+    <title>Place Clone</title>
+
+    <link rel="stylesheet" type="text/css" href="static/style.css">
+
     <script src = "static/js/jquery-3.2.1.min.js"></script>
     <script src = "static/js/jscolor.js"></script>
     <script src = "static/js/index.js"></script>
 </head>
 <body>
     <canvas id = "canvas"></canvas>
+    <button id="colorpicker" class="jscolor {width:300, height:200, valueElement:'chosenValue', onFineChange:'choose_color(\'#\' + this.toString())'}">
+        Choose Color
+    </button>
 </body>
+
+</html>

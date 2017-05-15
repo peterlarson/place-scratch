@@ -24,12 +24,15 @@ def hello():
 
 @app.route("/update", methods=['POST'])
 def update():
+    if False: #TODO: if user has no permission to write this pixel
+        return "NOT_OK"
+
     x_coord = request.form['x']
     y_coord = request.form['y']
     color = request.form['color']
     r.set(str(x_coord) + '-' + str(y_coord), color.encode('utf-8')) 
     print("Setting: " + str(x_coord) + '-' + str(y_coord)) 
-    return "ok"
+    return "OK"
 
 
 @app.route("/canvas") 
