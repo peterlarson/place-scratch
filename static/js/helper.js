@@ -1,21 +1,52 @@
-var draw_rect = function(color){
-    var c = $("#place-canvas").val();
-    var ctx = c.getContext("2d");
+var pixelSize = 10;
+
+var canvas;
+var ctx;
+var pixels;
+
+var draw_pixel = function(x, y, color) {
     ctx.fillStyle = color;
-    ctx.fillRect(0,0,10,10);
+    ctx.fillRect(
+        x,
+        y,
+        pixelSize,
+        pixelSize
+    );
 }
 
-var update = function(){
+var update = function() {
     $.getJSON("/canvas", function(data) {
-        var color = data[0][0]
-        draw_rect(color)
+        pixels = data;
+        width = pixels.length;
+        height = pixels[0].length;
+        canvas.width = width*pixelSize;
+        canvas.height = height*pixelSize;
+        for(var x=0; x<width; x++) {
+            for(var y=0; y<height; y++) {
+                draw_pixel(x, y, pixels[x][y]);
+            }
+        }
     })
 }
 
-var set_color = function(new_color){
-    $.post("/update", {x: "0", y:"0", color: new_color}, 
+var set_color = function(color) {
+    $.post("/update", {x: "0", y:"0", color: color}, 
         function(returnedData){
             console.log(returnedData);
             update()
         })
 }
+
+var init = function() {
+    canvas = document.getElementById("canvas");
+    ctx = canvas.getContext("2d");
+
+    ctx.imageSmoothingEnabled = false;
+    ctx.mozImageSmoothingEnabled = false;
+    ctx.webkitImageSmoothingEnabled = false;
+    ctx.msImageSmoothingEnabled = false;
+
+    update();
+}
+
+window.onload = init;
