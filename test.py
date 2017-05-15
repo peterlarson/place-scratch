@@ -13,11 +13,11 @@ def hello():
 
 @app.route("/update", methods=['POST'])
 def update():
-    x_coord = 0 #request.form['x']
-    y_coord = 0 #request.form['y']
+    x_coord = request.form['x']
+    y_coord = request.form['y']
     color = request.form['color']
     r.set(str(x_coord)+'-'+str(y_coord), color)
-    print("Setting: " + str(x_coord)+'-'+str(y_coord) )
+    print("Setting: " + str(x_coord)+'-'+str(y_coord))
     return "ok"
 
 @app.route("/canvas")
