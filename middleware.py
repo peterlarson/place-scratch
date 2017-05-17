@@ -35,14 +35,14 @@ def update():
     y_coord = request.form['y']
     color = request.form['color']
     #r.set(str(x_coord) + '-' + str(y_coord), color.encode('utf-8'))
-    redisdb.update_canvas(x_coord, y_coord, color)
+    redisdb.update_canvas(x_coord, y_coord, color, request.form['canvas'])
     print("Setting: " + str(x_coord) + '-' + str(y_coord))
     return "OK"
 
 
 @app.route("/canvas") 
 def get_canvas():
-    return jsonify(redisdb.get_canvas())
+    return jsonify(redisdb.get_canvas(request.args['canvas']))
 
 if __name__ == "__main__":
     app.run()

@@ -7,6 +7,10 @@
     height: 40px;
 }
 
+#canvaschoosediv {
+    padding-top: 120px;
+}
+
 #plus {
     bottom: 40px;
 }
@@ -15,9 +19,17 @@
     bottom: 0px;
 }
 
+#back {
+    position: fixed;
+    left: 0px;
+    width: 80px;
+    height: 80px;
+    bottom: 0px;
+}
+
 #colorpicker {
     position: fixed;
-    right: 80px;
+    right: 0px;
     bottom: 0px;
     height: 80px;
     width: 100%;

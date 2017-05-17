@@ -2,6 +2,8 @@ var pixelSize = 4;
 var margin = 0;
 var chosenColor = "#FFFFFF";
 
+var canvasName = "canvas1";
+var displayingCanvas = true;
 var canvas;
 var ctx;
 var pixels;
@@ -33,7 +35,7 @@ var draw_pixels = function(pixels) {
 }
 
 var update = function() {
-    $.getJSON("/canvas", function(data) {
+    $.getJSON("/canvas", {canvas: canvasName}, function(data) {
         pixels = data;
         draw_pixels(pixels);
     })
@@ -42,7 +44,7 @@ var update = function() {
 var set_color = function(x, y, color) {
     oldColor = pixels[x][y];
     draw_pixel(x, y, color);
-    $.post("/update", {x: x, y: y, color: color}, 
+    $.post("/update", {x: x, y: y, color: color, canvas: canvasName}, 
         function(returnedData){
             if(returnedData != "OK") {
                 alert("Write to pixel rejected!");
@@ -50,7 +52,26 @@ var set_color = function(x, y, color) {
             } else {
                 pixels[x][y] = color;
             }
-        })
+        });
+}
+
+var toggle_display_mode = function() {
+    if(displayingCanvas) {
+        $("#canvaschoosediv").show();
+        $("#canvas").hide();
+        $("#colorpicker").hide();
+        $("#plus").hide();
+        $("#minus").hide();
+        $("#back").hide();
+    } else {
+        $("#canvaschoosediv").hide();
+        $("#canvas").show();
+        $("#colorpicker").show();
+        $("#plus").show();
+        $("#minus").show();
+        $("#back").show();
+    }
+    displayingCanvas = !displayingCanvas;
 }
 
 var init = function() {
@@ -76,6 +97,27 @@ var init = function() {
         )
     });
 
+    var selectCanvasFxn = function(e) {
+        canvasName = $("#canvasnamebox")[0].value;
+        update();
+        toggle_display_mode();
+    }
+
+    document.onkeydown = function(){
+        if(displayingCanvas) {
+            return;
+        }
+        if(window.event.keyCode=='13'){
+            selectCanvasFxn();
+        }
+    }
+
+    $("#selectcanvas")[0].addEventListener('click', selectCanvasFxn);
+
+    $("#back")[0].addEventListener('click', function(e) {
+        toggle_display_mode();
+    });
+
     $("#plus")[0].addEventListener('click', function(e) {
         pixelSize++;
         draw_pixels(pixels);
@@ -88,7 +130,7 @@ var init = function() {
         }
     });
 
-    update();
+    toggle_display_mode();
 }
 
 window.onload = init;

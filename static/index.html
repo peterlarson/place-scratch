@@ -13,9 +13,18 @@
 </head>
 <body>
     <canvas id="canvas"></canvas>
+    <div id="canvaschoosediv">
+        <center>
+        Enter the name of the painting you'd like to view:
+        <br><br>
+        <input id="canvasnamebox" type="text" pattern="[a-zA-Z0-9!@#$%^*_|]{6,25}"/>
+        <button id="selectcanvas">Confirm</button>
+        </center>
+    </div>
     <button id="colorpicker" class="jscolor {width:300, height:200, valueElement:'chosenValue', onFineChange:'choose_color(\'#\' + this.toString())'}">
         Choose Color
     </button>
+    <button id="back">Back</button>
     <button id="plus" class="zoombutton">+</button>
     <button id="minus" class="zoombutton">-</button>
 </body>
