@@ -1,5 +1,5 @@
-var pixelSize = 30;
-var margin = 1;
+var pixelSize = 4;
+var margin = 0;
 var chosenColor = "#FFFFFF";
 
 var canvas;

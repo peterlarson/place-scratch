@@ -1,8 +1,25 @@
+.zoombutton {
+    position: fixed;
+    font-size: 24pt;
+    color: gray;
+    right: 0px;
+    width: 80px;
+    height: 40px;
+}
+
+#plus {
+    bottom: 40px;
+}
+
+#minus {
+    bottom: 0px;
+}
+
 #colorpicker {
     position: fixed;
-    left: 0px;
+    right: 80px;
     bottom: 0px;
-    height: 100px;
+    height: 80px;
     width: 100%;
     font-size: 16px;
 }
