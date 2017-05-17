@@ -76,6 +76,18 @@ var init = function() {
         )
     });
 
+    $("#plus")[0].addEventListener('click', function(e) {
+        pixelSize++;
+        draw_pixels(pixels);
+    });
+
+    $("#minus")[0].addEventListener('click', function(e) {
+        if(pixelSize > 1) {
+            pixelSize--;
+            draw_pixels(pixels);
+        }
+    });
+
     update();
 }
 
