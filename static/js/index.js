@@ -1,3 +1,4 @@
+var updateIntervalMs = 20000;
 var pixelSize = 4;
 var margin = 0;
 var chosenColor = "#FFFFFF";
@@ -35,6 +36,10 @@ var draw_pixels = function(pixels) {
 }
 
 var update = function() {
+    if(!displayingCanvas) {
+        return;
+    }
+
     $.getJSON("/canvas", {canvas: canvasName}, function(data) {
         pixels = data;
         draw_pixels(pixels);
@@ -99,8 +104,8 @@ var init = function() {
 
     var selectCanvasFxn = function(e) {
         canvasName = $("#canvasnamebox")[0].value;
-        update();
         toggle_display_mode();
+        update();
     }
 
     document.onkeydown = function(){
@@ -129,6 +134,8 @@ var init = function() {
             draw_pixels(pixels);
         }
     });
+
+    setInterval(update, updateIntervalMs);
 
     toggle_display_mode();
 }
