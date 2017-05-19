@@ -1,7 +1,8 @@
-var updateIntervalMs = 20000;
+var updateIntervalMs = 5000;
 var pixelSize = 4;
 var margin = 0;
 var chosenColor = "#FFFFFF";
+var loadingDivCreated = false;
 
 var canvasName = "canvas1";
 var displayingCanvas = true;
@@ -35,15 +36,21 @@ var draw_pixels = function(pixels) {
     }
 }
 
-var update = function() {
+var update = function(showLoading = false) {
     if(!displayingCanvas) {
         return;
     }
 
     $.getJSON("/canvas", {canvas: canvasName}, function(data) {
+        if(showLoading) $("#loadingdiv").hide();
         pixels = data;
         draw_pixels(pixels);
-    })
+    });
+    if(!loadingDivCreated) {
+        loadingDivCreated = true;
+        $('body').append('<div id="loadingdiv">Generating pixels for the first time, this may take awhile...</div>');
+    }
+    if(showLoading) $("#loadingdiv").show();
 }
 
 var set_color = function(x, y, color) {
@@ -120,6 +127,7 @@ var init = function() {
     $("#selectcanvas")[0].addEventListener('click', selectCanvasFxn);
 
     $("#back")[0].addEventListener('click', function(e) {
+        $("#loadingdiv").hide();
         window.location.replace("/");
     });
 
@@ -135,15 +143,13 @@ var init = function() {
         }
     });
 
-    setInterval(update, updateIntervalMs);
-
+    setInterval(update, updateIntervalMs); // update every N ms
 
     toggle_display_mode();
-    if(window.location.pathname != "/"){
-        
+    if(window.location.pathname != "/") {
         canvasName = window.location.pathname.substring(8);
         toggle_display_mode();
-        update();
+        update(true);
     }
 }
 
