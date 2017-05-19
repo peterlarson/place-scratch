@@ -1,5 +1,6 @@
 import redis
 from random import randint
+import canvas_populator
 
 class redis_db:
 
@@ -20,9 +21,19 @@ class redis_db:
 
 
     def get_canvas(self, canvas_id = "canvas1"):
-        canvas = [[self.default_color for i in range(self.width)] for j in range(self.height)]
+        fetched_dim = 100
 
         result = self.conn.hgetall(canvas_id)
+        if(len(result) == 0):
+            data = canvas_populator.canvas_initializer(canvas_id, fetched_dim, fetched_dim)
+            if(data is not -1):
+                for x in range(fetched_dim):
+                    for y in range(fetched_dim):
+                        key = str(x+50)+"-"+str(y+50)
+                        self.conn.hset(canvas_id,key,data[x][y])
+                return (data)
+
+        canvas = [[self.default_color for i in range(self.width)] for j in range(self.height)]
         for record in result:
             key = record.decode("utf-8")
             coords = key.split("-")
@@ -35,4 +46,3 @@ class redis_db:
     def update_canvas(self, i,j,color,canvas_id = "canvas1"):
         key = str(i)+"-"+str(j)
         self.conn.hset(canvas_id,key,color)
-
