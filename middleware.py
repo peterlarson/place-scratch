@@ -26,6 +26,11 @@ def hello():
     return app.send_static_file('index.html')
 
 
+@app.route("/canvas/<canvas_name>")
+def named_canvas(canvas_name):
+    return app.send_static_file('index.html')
+
+
 @app.route("/update", methods=['POST'])
 def update():
     if False: #TODO: if user has no permission to write this pixel

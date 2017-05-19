@@ -80,6 +80,7 @@ var toggle_display_mode = function() {
 }
 
 var init = function() {
+
     canvas = $("#canvas")[0];
     ctx = canvas.getContext("2d");
 
@@ -104,8 +105,7 @@ var init = function() {
 
     var selectCanvasFxn = function(e) {
         canvasName = $("#canvasnamebox")[0].value;
-        toggle_display_mode();
-        update();
+        window.location.replace("/canvas/"+canvasName);
     }
 
     document.onkeydown = function(){
@@ -120,7 +120,7 @@ var init = function() {
     $("#selectcanvas")[0].addEventListener('click', selectCanvasFxn);
 
     $("#back")[0].addEventListener('click', function(e) {
-        toggle_display_mode();
+        window.location.replace("/");
     });
 
     $("#plus")[0].addEventListener('click', function(e) {
@@ -137,7 +137,14 @@ var init = function() {
 
     setInterval(update, updateIntervalMs);
 
+
     toggle_display_mode();
+    if(window.location.pathname != "/"){
+        
+        canvasName = window.location.pathname.substring(8);
+        toggle_display_mode();
+        update();
+    }
 }
 
 window.onload = init;
