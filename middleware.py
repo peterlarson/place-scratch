@@ -14,7 +14,7 @@ app = Flask(__name__)
 
 height = 200
 width = 200
-default_color = "#234234"
+default_color = "#d3d3d3"
 
 redisdb = redis_db.redis_db(width, height, default_color)
 
@@ -23,6 +23,11 @@ def r_name(x,y):
 
 @app.route("/")
 def hello():
+    return app.send_static_file('index.html')
+
+
+@app.route("/canvas/<canvas_name>")
+def named_canvas(canvas_name):
     return app.send_static_file('index.html')
 
 
@@ -42,7 +47,9 @@ def update():
 
 @app.route("/canvas") 
 def get_canvas():
-    return jsonify(redisdb.get_canvas(request.args['canvas']))
+
+    canvas = redisdb.get_canvas(request.args['canvas'])
+    return jsonify(canvas)
 
 if __name__ == "__main__":
     app.run()
